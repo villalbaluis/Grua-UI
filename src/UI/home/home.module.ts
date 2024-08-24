@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserHomeComponent } from './user-home/user-home.component';
-
-
+import { DashboardHomeComponent } from './dashboard/dashboard-home.component';
 
 @NgModule({
   declarations: [
-    UserHomeComponent
+    DashboardHomeComponent
   ],
   imports: [
     CommonModule
