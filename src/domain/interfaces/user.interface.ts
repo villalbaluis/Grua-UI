@@ -1,6 +1,10 @@
 export interface IUser {
-    id: string;
+    id: number;
     username: string;
-    email: string;
-    password: string;
-  }
+    type: number;
+}
+
+export interface IAuthResponse {
+    token: string;
+    user: IUser;
+}
