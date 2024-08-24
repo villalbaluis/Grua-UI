@@ -37,18 +37,23 @@ export class ApiOrchestratorService {
 
   private createRequest<T>(endpoint: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE', data?: any): Observable<T> {
     const url = `${this.baseUrl}/${endpoint}`;
-    const headers = new HttpHeaders({
-      'ApiToken': this.apiKey
-    });
+    let headers = new HttpHeaders().set('ApiToken', this.apiKey);
+
+    if (data?.Authorization) {
+      headers = headers.set('Authorization', `Bearer ${data.Authorization}`);
+      data = { ...data };
+      delete data.Authorization;
+    }
 
     const options = {
-      headers: headers,
-      body: method === 'POST' || method === 'PUT' ? data : undefined,
-      params: method === 'GET' || method === 'DELETE' ? new HttpParams({ fromObject: data }) : undefined
+      headers,
+      body: (method === 'POST' || method === 'PUT') ? data : undefined,
+      params: (method === 'GET' || method === 'DELETE') ? new HttpParams({ fromObject: data }) : undefined
     };
 
     return this.http.request<T>(method, url, options);
   }
+
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     if (error.status === 401) {

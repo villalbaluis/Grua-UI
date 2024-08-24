@@ -82,8 +82,7 @@ export default class LoginFormComponent implements OnInit {
             if (this.loginForm.valid) {
                 const { username, password } = this.loginForm.value;
                 this.authService.login(username, password).subscribe({
-                    next: (user) => {
-                        console.log('Login exitoso', user);
+                    next: (r) => {
                         this.router.navigate(['/dashboard']);
                     },
                     error: (error) => {
