@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import { AuthModule } from 'src/UI/auth/auth.module';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderComponent } from '../UI/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,

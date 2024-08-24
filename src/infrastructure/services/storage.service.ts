@@ -11,9 +11,14 @@ export class StorageService {
         private sessionStorageService: SessionStorageService
     ) {}
 
-    // Local Storage methods.
+    /**
+     * Guardar un elemento en el Local Storage del Browser.
+     * @param key Identificador del elemento en el Storage.
+     * @param value Valor de la llave.
+     * @param timeout (Opcional) Tiempo de expiración de la llave
+    */
     public setLocalStorage(key: string, value: any, timeout: number = 0) { // Guardar nuevo dato en Local Storage
-        if (value != null) {
+        if (key && value) {
             this.localStorageService.set(key, value, timeout, 't');
         }
     }
@@ -32,7 +37,7 @@ export class StorageService {
     
     // Session Storage methods.
     public setSessionStorage(key: string, value: any, timeout: number = 0) { // Guardar nuevo dato en Session Storage
-        if (value != null) {
+        if (key && value) {
             this.sessionStorageService.set(key, value, timeout, 't');
         }
     }

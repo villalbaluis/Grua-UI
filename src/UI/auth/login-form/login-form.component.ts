@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../infrastructure/services/auth.service';
+import { StorageService } from '../../../infrastructure/services/storage.service';
 import { CustomValidatorsService } from '../../../infrastructure/validators/custom-validators.service';
 import { ErrorHandlerService } from '../../../infrastructure/validators/error-handler.service';
 
@@ -11,18 +12,25 @@ import { ErrorHandlerService } from '../../../infrastructure/validators/error-ha
     styleUrls: ['./login-form.component.css'],
 })
 export default class LoginFormComponent implements OnInit {
-    loginForm!: FormGroup;
+    public loginForm!: FormGroup;
 
     constructor(
-        private fb: FormBuilder,
-        private customValidators: CustomValidatorsService,
-        private errorHandler: ErrorHandlerService,
         private authService: AuthService,
-        private router: Router
+        private customValidators: CustomValidatorsService,
+        private fb: FormBuilder,
+        private errorHandler: ErrorHandlerService,
+        private router: Router,
+        private storageService: StorageService
     ) {}
 
     ngOnInit(): void {
+        this.setupEvents();
         this.initForm();
+    }
+
+    private setupEvents() {
+        this.storageService.removeAllLocalStorage();
+        this.storageService.removeAllSessionStorage();
     }
 
     private initForm() {
@@ -46,7 +54,30 @@ export default class LoginFormComponent implements OnInit {
         });
     }
 
-    onSubmit() {
+    protected markFormGroupTouched(formGroup: FormGroup) {
+        Object.values(formGroup.controls).forEach((control) => {
+            control.markAsTouched();
+            if (control instanceof FormGroup) {
+                this.markFormGroupTouched(control);
+            }
+        });
+    }
+
+    public isFieldInvalid(fieldName: string): boolean {
+        const control = this.loginForm.get(fieldName);
+        return (
+            control !== null &&
+            control.invalid &&
+            (control.dirty || control.touched)
+        );
+    }
+
+    public getErrorMessage(fieldName: string): string {
+        const control = this.loginForm.get(fieldName);
+        return control ? this.errorHandler.getErrorMessage(control) : '';
+    }
+
+    public onSubmit() {
         try {
             if (this.loginForm.valid) {
                 const { username, password } = this.loginForm.value;
@@ -66,28 +97,5 @@ export default class LoginFormComponent implements OnInit {
         } catch (e) {
             console.error(e);
         }
-    }
-
-    markFormGroupTouched(formGroup: FormGroup) {
-        Object.values(formGroup.controls).forEach((control) => {
-            control.markAsTouched();
-            if (control instanceof FormGroup) {
-                this.markFormGroupTouched(control);
-            }
-        });
-    }
-
-    isFieldInvalid(fieldName: string): boolean {
-        const control = this.loginForm.get(fieldName);
-        return (
-            control !== null &&
-            control.invalid &&
-            (control.dirty || control.touched)
-        );
-    }
-
-    getErrorMessage(fieldName: string): string {
-        const control = this.loginForm.get(fieldName);
-        return control ? this.errorHandler.getErrorMessage(control) : '';
     }
 }
