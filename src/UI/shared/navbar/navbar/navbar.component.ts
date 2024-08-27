@@ -7,6 +7,7 @@ import { Component, HostListener, Input, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
     @Input() username: string = 'Default User';
+    @Input() userRole: string = 'Default Role';
     @Input() sidebarOptions: string[] = [];
 
     public firstName: string = '';

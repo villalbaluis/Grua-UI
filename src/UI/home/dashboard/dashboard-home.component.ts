@@ -14,6 +14,7 @@ export class DashboardHomeComponent implements OnInit {
   public userInformation: User | null = null;
   public username: string = '';
   public sidebarOptions: string[] = [];
+  public userRole: string = '';
 
   constructor(private storageService: StorageService) { }
 
@@ -39,18 +40,22 @@ export class DashboardHomeComponent implements OnInit {
 
   private setUsernameAndSidebarOptions(user: User): void {
     const defaultUsername = 'User Default';
+    const defaultRole = 'Default';
     switch (user.type) {
       case UserRole.CLIENT_NUMBER_TYPE:
         this.username = (user.cliente as Cliente)?.nombre || defaultUsername;
         this.sidebarOptions = Object.values(ClientOptions);
+        this.userRole = 'Cliente';
         break;
 
       case UserRole.OPERATOR_NUMBER_TYPE:
         this.username = (user.operador as Operador)?.nombre || defaultUsername;
         this.sidebarOptions = Object.values(OperatorOptions);
+        this.userRole = 'Operador';
         break;
       default:
         this.username = defaultUsername;
+        this.userRole = defaultUsername;
         this.sidebarOptions = [];
         break;
     }
@@ -59,5 +64,6 @@ export class DashboardHomeComponent implements OnInit {
   private handleUserInformationError(): void {
     this.username = 'User Default';
     this.sidebarOptions = [];
+    this.userRole = 'Default';
   }
 }
