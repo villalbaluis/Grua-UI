@@ -40,7 +40,6 @@ export class AuthService {
             })
             .pipe(
                 map((response) => {
-                    console.log(response);
                     const userDetails = User.fromJson(response);
                     this.currentUser = userDetails;
                     this.storageService.setSessionStorage('userDetailsSession', userDetails);

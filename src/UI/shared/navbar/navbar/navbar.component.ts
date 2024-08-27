@@ -1,18 +1,57 @@
-// navbar.component.ts
-import { Component, Input } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.css'],
 })
-export class NavbarComponent {
-  @Input() username: string = 'Usuario';  // Nombre de usuario por defecto
-  @Input() sidebarOptions: string[] = []; // Opciones para el sidebar
+export class NavbarComponent implements OnInit {
+    @Input() username: string = 'Default User';
+    @Input() sidebarOptions: string[] = [];
 
-  isSidebarOpen = false; // Controla la visibilidad del sidebar
+    public firstName: string = '';
+    public lastName: string = '';
+    public initials: string = '';
+    public backgroundColor: string = '';
+    protected isSidebarOpen = false;
+    protected isDropdownOpen = false;
 
-  toggleSidebar() {
-    this.isSidebarOpen = !this.isSidebarOpen;
-  }
+    ngOnInit() {
+        this.initials = this.getInitials();
+        this.backgroundColor = this.getRandomColor();
+    }
+
+    private getInitials(): string {
+        const nameParts = this.username.split(' ');
+        this.firstName = nameParts[0];
+        this.lastName = nameParts[1] || '';
+
+        const firstInitial = this.firstName.charAt(0).toUpperCase();
+        const lastInitial = this.lastName.charAt(0).toUpperCase();
+
+        return `${firstInitial}${lastInitial}`;
+    }
+
+    private getRandomColor(): string {
+        const letters = '0123456789ABCDEF';
+        let color = '#';
+        for (let i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    public toggleSidebar() {
+        this.isSidebarOpen = !this.isSidebarOpen;
+    }
+
+    public toggleDropdown(event: Event) {
+        event.stopPropagation();
+        this.isDropdownOpen = !this.isDropdownOpen;
+    }
+
+    public logout() {
+        console.log('Logging out...');
+    }
+
 }
