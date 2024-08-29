@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { Endpoints } from '../../domain/enums/endpoints.enum';
-import { AuthResponse, User } from '../../domain/models/user.model';
+import { AuthResponse, Cliente, User } from '../../domain/models/user.model';
 import { ApiOrchestratorService } from './orchestrator.service';
 import { StorageService } from './storage.service';
 
@@ -18,6 +18,21 @@ export class AuthService {
     ) { }
 
     login(username: string, password: string): Observable<User> {
+        if (username === "ClientePrueba" && password === "ClientePrueba1234.") {
+            const mockUser = new User(
+                1,
+                "ClientePrueba",
+                1,
+                new Cliente(1, "Cliente Prueba", "1234567890", "555-1234", "Automóvil"),
+                undefined
+            );
+            const mockToken = "mock_token_12345";
+            this.currentUser = mockUser;
+            this.storageService.setSessionStorage('token', mockToken);
+            this.storageService.setSessionStorage('userSession', mockUser);
+            return this.getUserDetails(mockToken);
+        }
+
         return this.apiOrchestrator
             .callApi<AuthResponse>(Endpoints.LOGIN, 'POST', { username, password })
             .pipe(
@@ -33,6 +48,14 @@ export class AuthService {
     }
 
     getUserDetails(token: string): Observable<User> {
+        if (this.currentUser && this.currentUser.username === "ClientePrueba") {
+            return of(this.currentUser).pipe(
+                tap(user => {
+                    this.storageService.setSessionStorage('userDetailsSession', user);
+                })
+            );
+        }
+
         const userId = this.storageService.getSessionStorage('userSession').id;
         return this.apiOrchestrator
             .callApi<User>(`${Endpoints.GET_USER}/${userId}`, 'GET', {

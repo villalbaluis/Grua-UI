@@ -1,4 +1,8 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserRole } from 'src/domain/enums/roles.enum';
+import { ClientOptionsRedirects } from 'src/domain/enums/routes.enum';
+import { ModalService } from 'src/infrastructure/services/modal.service';
 
 @Component({
     selector: 'app-navbar',
@@ -9,6 +13,7 @@ export class NavbarComponent implements OnInit {
     @Input() username: string = 'Default User';
     @Input() userRole: string = 'Default Role';
     @Input() sidebarOptions: string[] = [];
+    @Input() userType: number = UserRole.CLIENT_NUMBER_TYPE;
 
     public firstName: string = '';
     public lastName: string = '';
@@ -16,7 +21,14 @@ export class NavbarComponent implements OnInit {
     public backgroundColor: string = '';
     protected isSidebarOpen = false;
     protected isDropdownOpen = false;
+    private clientOptionsRedirects: ClientOptionsRedirects;
 
+    constructor(
+        private router: Router,
+        private modalService: ModalService
+    ) {
+        this.clientOptionsRedirects = new ClientOptionsRedirects();
+    }
     ngOnInit() {
         this.initials = this.getInitials();
         this.backgroundColor = this.getRandomColor();
@@ -49,6 +61,15 @@ export class NavbarComponent implements OnInit {
     public toggleDropdown(event: Event) {
         event.stopPropagation();
         this.isDropdownOpen = !this.isDropdownOpen;
+    }
+
+    public navigateToRoute(option: string) {
+        const route = this.clientOptionsRedirects.getRouteByEnumName(this.userType, option);
+        if (route) {
+            this.router.navigate([route]);
+        } else {
+            this.modalService.showErrorModal("No se ha encontrado una ruta relacionada.");
+        }
     }
 
     public logout() {
