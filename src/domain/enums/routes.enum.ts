@@ -7,14 +7,14 @@ export class ClientOptionsRedirects {
                 {
                     name: 'Solicitar Servicio',
                     availability: true,
-                    route: '/new_service',
+                    route: 'new_service',
                     icon: '',
                     enum_Key: 'SERVICE'
                 },
                 {
                     name: 'Listado de Servicios',
                     availability: true,
-                    route: '/all_services',
+                    route: 'all_services',
                     icon: '',
                     enum_Key: 'OWN_SERVICES'
                 }

@@ -1,1 +1,37 @@
-<p>new-services works!</p>
+<h2>Bienvenido, <span>{{ userInformation?.cliente?.nombre }}</span></h2>
+
+<div class="container px-5 my-5">
+    <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+        <div class="form-floating mb-3">
+            <input class="form-control" id="fechaDelServicio" type="date" formControlName="fechaDelServicio"
+                placeholder="Fecha del servicio" />
+            <label for="fechaDelServicio">Fecha del servicio</label>
+        </div>
+        <div class="form-floating mb-3">
+            <select class="form-select" id="vehiculoDelServicio" formControlName="vehiculoDelServicio"
+                (change)="onVehiculoChange($event)">
+                <option value="Propio">{{ userInformation?.cliente?.vehiculoTransportado }}</option>
+                <option value="Otro">Otro</option>
+            </select>
+            <label for="vehiculoDelServicio">Vehiculo del servicio</label>
+        </div>
+        <div class="form-floating mb-3" *ngIf="showOtroVehiculoInput">
+            <input class="form-control" id="otroVehiculo" type="text" formControlName="otroVehiculo"
+                placeholder="Información del vehiculo" />
+            <label for="otroVehiculo">Información del vehiculo</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input class="form-control" id="direccionDeRecogida" type="text" formControlName="direccionDeRecogida"
+                placeholder="Dirección de recogida" />
+            <label for="direccionDeRecogida">Dirección de recogida</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input class="form-control" id="direccionDeLlegada" type="text" formControlName="direccionDeLlegada"
+                placeholder="Dirección de llegada" />
+            <label for="direccionDeLlegada">Dirección de llegada</label>
+        </div>
+        <div class="d-grid">
+            <button class="btn btn-primary btn-lg" type="submit">Solicitar Servicio</button>
+        </div>
+    </form>
+</div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { DashboardHomeComponent } from './dashboard/dashboard-home.component';
 import { NavbarModule } from '../shared/navbar/navbar.module';
+import { ServicesModule } from '../services/services.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { NavbarModule } from '../shared/navbar/navbar.module';
   imports: [
     CommonModule,
     HomeRoutingModule,
-    NavbarModule
+    NavbarModule,
+    ServicesModule
   ]
 })
 export class HomeModule { }

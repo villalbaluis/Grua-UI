@@ -23,7 +23,7 @@ export class AuthService {
                 1,
                 "ClientePrueba",
                 1,
-                new Cliente(1, "Cliente Prueba", "1234567890", "555-1234", "Automóvil"),
+                new Cliente(1, "Camilo Gonzales", "1234567890", "555-1234", "Chevrolet Aveo 2022"),
                 undefined
             );
             const mockToken = "mock_token_12345";

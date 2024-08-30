@@ -66,7 +66,7 @@ export class NavbarComponent implements OnInit {
     public navigateToRoute(option: string) {
         const route = this.clientOptionsRedirects.getRouteByEnumName(this.userType, option);
         if (route) {
-            this.router.navigate([route]);
+            this.router.navigate(['/dashboard', route]);
         } else {
             this.modalService.showErrorModal("No se ha encontrado una ruta relacionada.");
         }
