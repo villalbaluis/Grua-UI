@@ -35,3 +35,7 @@ h6 {
 p {
     text-wrap: pretty;
 }
+
+body {
+    background-color: #6C757D;
+}

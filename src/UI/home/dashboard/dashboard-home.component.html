@@ -1,1 +1,12 @@
-<p>dashboard-home works!</p>
+<app-navbar
+    [username]="username"
+    [sidebarOptions]="sidebarOptions"
+    [userRole]="userRole"
+    [userType]="userType"
+></app-navbar>
+
+<div class="container mt-3">
+    <div class="dashboard-content">
+        <router-outlet></router-outlet>
+    </div>
+</div>
