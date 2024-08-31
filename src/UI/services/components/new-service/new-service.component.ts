@@ -11,7 +11,7 @@ import { StorageService } from 'src/infrastructure/services/storage.service';
 export class NewServiceComponent implements OnInit {
   public userInformation: User | null = null;
   public serviceForm: FormGroup;
-  public showOtroVehiculoInput: boolean = false;
+  public showDifferentVehicleInput: boolean = false;
 
   constructor(
     private storageService: StorageService,
@@ -45,8 +45,8 @@ export class NewServiceComponent implements OnInit {
 
   public onVehiculoChange(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
-    this.showOtroVehiculoInput = selectElement.value === 'Otro';
-    if (!this.showOtroVehiculoInput) {
+    this.showDifferentVehicleInput = selectElement.value === 'Otro';
+    if (!this.showDifferentVehicleInput) {
       this.serviceForm.get('otroVehiculo')?.setValue('');
     }
   }

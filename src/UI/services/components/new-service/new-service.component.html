@@ -1,4 +1,4 @@
-<h2>Bienvenido, <span>{{ userInformation?.cliente?.nombre }}</span></h2>
+<h2 class="text-white">Bienvenido, <span>{{ userInformation?.cliente?.nombre }}</span></h2>
 
 <div class="container px-5 my-5">
     <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
@@ -15,7 +15,7 @@
             </select>
             <label for="vehiculoDelServicio">Vehiculo del servicio</label>
         </div>
-        <div class="form-floating mb-3" *ngIf="showOtroVehiculoInput">
+        <div class="form-floating mb-3" *ngIf="showDifferentVehicleInput">
             <input class="form-control" id="otroVehiculo" type="text" formControlName="otroVehiculo"
                 placeholder="Información del vehiculo" />
             <label for="otroVehiculo">Información del vehiculo</label>
