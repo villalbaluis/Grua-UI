@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { UserRole } from 'src/domain/enums/roles.enum';
 import { ClientOptionsRedirects } from 'src/domain/enums/routes.enum';
 import { ModalService } from 'src/infrastructure/services/modal.service';
+import { AuthService } from '../../../../infrastructure/services/auth.service';
 
 @Component({
     selector: 'app-navbar',
@@ -25,7 +26,9 @@ export class NavbarComponent implements OnInit {
 
     constructor(
         private router: Router,
-        private modalService: ModalService
+        private modalService: ModalService,
+        private authService: AuthService,
+
     ) {
         this.clientOptionsRedirects = new ClientOptionsRedirects();
     }
@@ -73,7 +76,7 @@ export class NavbarComponent implements OnInit {
     }
 
     public logout() {
-        console.log('Logging out...');
+        this.authService.logout();
     }
 
 }

@@ -5,6 +5,7 @@ import { Endpoints } from '../../domain/enums/endpoints.enum';
 import { AuthResponse, Cliente, User } from '../../domain/models/user.model';
 import { ApiOrchestratorService } from './orchestrator.service';
 import { StorageService } from './storage.service';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root',
@@ -14,10 +15,11 @@ export class AuthService {
 
     constructor(
         private apiOrchestrator: ApiOrchestratorService,
-        private storageService: StorageService
+        private storageService: StorageService,
+                private router: Router,
     ) { }
 
-    login(username: string, password: string): Observable<User> {
+    public login(username: string, password: string): Observable<User> {
         if (username === "ClientePrueba" && password === "ClientePrueba1234.") {
             const mockUser = new User(
                 1,
@@ -47,7 +49,13 @@ export class AuthService {
             );
     }
 
-    getUserDetails(token: string): Observable<User> {
+    public logout(): void {
+        this.currentUser = null;
+        this.storageService.removeAllSessionStorage();
+        this.router.navigate(['/login']);
+    }
+
+    protected getUserDetails(token: string): Observable<User> {
         if (this.currentUser && this.currentUser.username === "ClientePrueba") {
             return of(this.currentUser).pipe(
                 tap(user => {
@@ -71,7 +79,7 @@ export class AuthService {
             );
     }
 
-    getCurrentUser(): User | null {
+    protected getCurrentUser(): User | null {
         return this.currentUser;
     }
 }

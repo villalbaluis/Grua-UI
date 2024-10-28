@@ -21,9 +21,16 @@ export default class LoginFormComponent implements OnInit {
         private errorHandler: ErrorHandlerService,
         private router: Router,
         private storageService: StorageService
-    ) {}
+    ) { }
 
     ngOnInit(): void {
+        // Verificar si ya está autenticado
+        const token = this.storageService.getSessionStorage('token');
+        if (token) {
+            this.router.navigate(['/dashboard/all_services']);
+            return;
+        }
+
         this.setupEvents();
         this.initForm();
     }
@@ -82,8 +89,10 @@ export default class LoginFormComponent implements OnInit {
             if (this.loginForm.valid) {
                 const { username, password } = this.loginForm.value;
                 this.authService.login(username, password).subscribe({
-                    next: (r) => {
-                        this.router.navigate(['/dashboard']);
+                    next: (user) => {
+                        if (user) {
+                            this.router.navigate(['/dashboard/all_services']);
+                        }
                     },
                     error: (error) => {
                         console.error('Error en el login', error);
@@ -94,7 +103,7 @@ export default class LoginFormComponent implements OnInit {
                 this.markFormGroupTouched(this.loginForm);
             }
         } catch (e) {
-            console.error(e);
+            console.error('Error inesperado:', e);
         }
     }
 }

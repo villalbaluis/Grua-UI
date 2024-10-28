@@ -5,7 +5,7 @@ export class ClientOptionsRedirects {
         [UserRole.CLIENT_NUMBER_TYPE]: {
             routes: [
                 {
-                    name: 'Solicitar Servicio',
+                    name: 'Ingresar nuevo servicio',
                     availability: true,
                     route: 'new_service',
                     icon: '',

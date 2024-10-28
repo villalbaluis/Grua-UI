@@ -11,7 +11,7 @@ const routes: Routes = [
     children: [
       { path: 'new_service', component: NewServiceComponent },
       { path: 'all_services', component: AllServicesComponent },
-      { path: '', redirectTo: 'all_services', pathMatch: 'full' }
+      { path: '', redirectTo: '/dashboard/all_services', pathMatch: 'full' }
     ]
   }
 ];

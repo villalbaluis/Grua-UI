@@ -1,4 +1,4 @@
 export enum ClientOptions {
-    SERVICE = 'Solicitar Servicio',
+    SERVICE = 'Ingresar nuevo servicio',
     OWN_SERVICES = 'Listado de Servicios',
 }
