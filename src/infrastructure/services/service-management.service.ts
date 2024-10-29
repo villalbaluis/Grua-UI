@@ -31,7 +31,6 @@ export class ServiceManagementService {
         }
     ];
 
-
     getAllServices(): Service[] {
         return this.services;
     }
@@ -45,6 +44,12 @@ export class ServiceManagementService {
         if (index !== -1) {
             this.services[index] = { ...updatedService };
         }
+    }
+
+    createService(newService: Service): void {
+        const maxId = this.services.reduce((max, service) => (service.id > max ? service.id : max), 0);
+        newService.id = maxId + 1;
+        this.services.push(newService);
     }
 
     getServiceById(id: number): Service | undefined {

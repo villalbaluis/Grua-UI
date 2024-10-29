@@ -1,23 +1,10 @@
+import { Hardware } from './hardware.interface';
+import { HardDrive } from './hard-drive.interface';
+import { Ram } from './ram.interface';
+
 export interface Service {
-    id: number;
-    hardware: {
-      cpu: string;
-      monitor: string;
-      keyboard: string;
-      mouse: string;
-      isAllInOne: boolean;
-      hasAOI: boolean;
-      isLaptop: boolean;
-      processor: string;
-    };
-    hardDrive: {
-      capacity: string;
-      type: string;
-      brand: string;
-    };
-    ram: {
-      capacity: string;
-      type: string;
-      brand: string;
-    };
-  }
+  id: number;
+  hardware: Hardware;
+  hardDrive: HardDrive;
+  ram: Ram;
+}

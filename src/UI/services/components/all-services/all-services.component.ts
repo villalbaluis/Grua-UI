@@ -53,4 +53,13 @@ export class AllServicesComponent implements OnInit {
       this.modalService.showModal('Éxito', 'Servicio actualizado correctamente', 'success');
     }
   }
+
+  async handleCreate(): Promise<void> {
+    const newService = await this.serviceForm.showCreateForm();
+    if (newService) {
+      this.serviceManagement.createService(newService);
+      this.loadServices();
+      this.modalService.showModal('Éxito', 'Servicio creado correctamente', 'success');
+    }
+  }
 }
